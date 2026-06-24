@@ -1,12 +1,12 @@
 from fastapi.testclient import TestClient
-from unittest.mock import patch
+from unittest.mock import AsyncMock, MagicMock, patch
 from main import app
 
 client = TestClient(app)
 
 def test_valid_tax_advice():
     # Αντί να καλέσει το Groq, επιστρέφει αυτό
-    with patch("services.llm_services.get_tax_advice") as mock_llm:
+    with patch[MagicMock | AsyncMock]("router.get_tax_advice") as mock_llm:
         mock_llm.return_value = "This is a fake tax advice response"
         
         response = client.post("/tax-advice", json={
